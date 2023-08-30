@@ -7,7 +7,7 @@ def solution(s):
         else:
             temp -= 1
         if temp < 0:
-            return False
+            break
             
     if temp == 0:
         return True
