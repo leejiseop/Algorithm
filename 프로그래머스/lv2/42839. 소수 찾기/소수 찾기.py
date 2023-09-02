@@ -1,26 +1,26 @@
-import itertools
+from itertools import permutations
 
-def is_decimal(number):
-    if number <= 1:
+def checkPrime(n):
+    if n <= 1:
         return False
     
-    for i in range(2, int(number**1/2) + 1):
-        if number % i == 0:
+    for i in range(2, int(n**1/2) + 1):
+        if n % i == 0:
             return False
         
     return True
 
 def solution(numbers):
     answer = 0
-    p = []
+    list_numbers = list(numbers)
+    temp = []
     
     for i in range(1, len(numbers) + 1):
-        p += list(itertools.permutations(list(numbers), i))
-        
-    final_p = set([int(''.join(i)) for i in p])
+        temp += list(permutations(list_numbers, i))
+    num = set([int(''.join(i)) for i in temp])
     
-    for num in final_p:
-        if is_decimal(num):
+    for i in num:
+        if checkPrime(i):
             answer += 1
     
     return answer
