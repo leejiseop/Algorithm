@@ -8,6 +8,8 @@ def solution(sizes):
         
     return w * h
 
+# max(max(x) for x in sizes) * max(min(x) for x in sizes)
+
 # 기존 풀이
 # def solution(sizes):
 #     answer = 0
