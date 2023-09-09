@@ -1,7 +1,7 @@
 import heapq
 
 def solution(jobs):
-    answer = 0
+    answer = 0 # 소요시간의 합 : 나중에 jobs 개수로 나누어서 평균 측정
     now, i = 0, 0
     start = -1
     h = []
@@ -18,4 +18,4 @@ def solution(jobs):
             i += 1
         else:
             now += 1
-    return int(answer / len(jobs))
+    return answer // len(jobs)
