@@ -10,53 +10,13 @@ def solution(operations):
             heapq.heappush(h, int(temp[1]))
         else:
             if h and int(temp[1]) == 1:
-                h.remove(max(h))
+                h.remove(max(h)) # remove 이후 다시 heapify가 필요하다! heap이 깨짐..
             elif h and int(temp[1]) == -1:
                 heapq.heappop(h)
     if h:
         return [max(h), min(h)]
     else:
         return [0, 0]
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def solution(operations):
-#     answer = []
-    
-#     q = []
-#     for operation in operations:
-#         x, num = operation.split() 
-#         num = int(num)
-        
-#         if x == 'I':
-#             heapq.heappush(q, num)
-#         elif x == 'D' and num == 1:
-#             if len(q) != 0:
-#                 max_value = max(q)
-#                 q.remove(max_value)
-#         else:
-#             if len(q) != 0:
-#                 heapq.heappop(q)
-    
-#     if len(q) == 0:
-#         answer = [0, 0]
-#     else:
-#         answer = [max(q), heapq.heappop(q)]
-        
-#     return answer
-
-
-
 
 # import heapq
 
