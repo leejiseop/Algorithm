@@ -21,6 +21,5 @@ def solution(maps):
                     if maps[nx][ny] == 1:
                         q.append((nx, ny))
                         maps[nx][ny] = maps[x][y] + 1
-                        print(x, y, nx, ny)
     
     return -1
