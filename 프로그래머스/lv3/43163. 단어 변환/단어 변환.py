@@ -6,7 +6,7 @@ def solution(begin, target, words):
     
     answer = 0
     n = len(words)
-    visited = [0 for _ in range(n)]
+    visited = [False for _ in range(n)]
     q = deque()
     q.append([begin, 0])
     
@@ -26,8 +26,9 @@ def solution(begin, target, words):
                     break
                     
             if diff == 1:
-                if visited[i] == 0:
+                if not visited[i]:
                     q.append([words[i], cnt + 1])
+                    visited[i] == True
                 else:
                     continue
     
