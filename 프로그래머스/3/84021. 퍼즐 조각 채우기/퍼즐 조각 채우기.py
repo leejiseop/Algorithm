@@ -1,87 +1,87 @@
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
-# programmers 퍼즐조각채우기
-
 from collections import deque
 
-dx = [0, 0, -1, 1]
-dy = [-1, 1, 0, 0]
-
-
-# board와 puzzle의 각각 빈공간과 블럭을 찾는 함수 (BFS)
-def find_block(board, f):
-    empty_board_list = []
-    visited = [[False] * len(board[0]) for _ in range(len(board))]
-
-    for i in range(len(board)):
-        for j in range(len(board[i])):
-            if not visited[i][j] and board[i][j] == f:
-                queue = deque([(i, j)])
-                board[i][j] = f ^ 1
-                visited[i][j] = True
-                lst = [(i, j)]
-
-                while queue:
-                    x, y = queue.popleft()
-                    for _ in range(4):
-                        nx, ny = x + dx[_], y + dy[_]
-                        if nx < 0 or nx > len(board) - 1 or ny < 0 or ny > len(board) - 1:
+def bfs(field, num):
+    dx = [1, -1, 0, 0]
+    dy = [0, 0, 1, -1]
+    lst = []
+    length = len(field)
+    
+    for i in range(length):
+        for j in range(length):
+            if field[i][j] == num:
+                field[i][j] = 5
+                q = deque([(i, j)])
+                temp = [(i, j)]
+                
+                while q:
+                    x, y = q.popleft()
+                    for move in range(4):
+                        nx = x + dx[move]
+                        ny = y + dy[move]
+                        if nx < 0 or length - 1 < nx or ny < 0 or length - 1 < ny:
                             continue
-                        elif board[nx][ny] == f:
-                            queue.append((nx, ny))
-                            board[nx][ny] = f ^ 1
-                            visited[nx][ny] = True
-                            lst.append((nx, ny))
-                empty_board_list.append(lst)
+                        if field[nx][ny] == num:
+                            field[nx][ny] = 5
+                            q.append((nx, ny))
+                            temp.append((nx, ny))
+                lst.append(temp)
+                
+    return lst
 
-    return empty_board_list
-
-
-# block의 인덱스들로 table을 만드는 함수
 def make_table(block):
-    x, y = zip(*block)
-    c, r = max(x) - min(x) + 1, max(y) - min(y) + 1
-    table = [[0] * r for _ in range(c)]
-
-    for i, j in block:
-        i, j = i - min(x), j - min(y)
-        table[i][j] = 1
+    x_list = [point[0] for point in block]
+    y_list = [point[1] for point in block]
+    
+    x_max, x_min = max(x_list), min(x_list)
+    y_max, y_min = max(y_list), min(y_list)
+    
+    col = x_max - x_min + 1
+    row = y_max - y_min + 1
+    
+    table = [[0] * row for _ in range(col)]
+    
+    for x, y in block:
+        x -= x_min
+        y -= y_min
+        table[x][y] = 1
+    
     return table
 
+def rotate(table):
+    new = [[0] * len(table) for _ in range(len(table[0]))]
+    row = len(table)
+    
+    for i in range(len(table)):
+        for j in range(len(table[0])):
+            new[j][row - i - 1] = table[i][j]
+    
+    return new
 
-# 오른쪽으로 90도 회전하는 함수
-def rotate(puzzle):
-    rotate = [[0] * len(puzzle) for _ in range(len(puzzle[0]))]
-    count = 0
-    for i in range(len(puzzle)):
-        for j in range(len(puzzle[i])):
-            if puzzle[i][j] == 1:
-                count += 1
-            rotate[j][len(puzzle) - 1 - i] = puzzle[i][j]
-    return rotate, count
-
+def area(table):
+    
+    
+    return 0
 
 def solution(game_board, table):
     answer = 0
-    empty_blocks = find_block(game_board, 0)
-    puzzles = find_block(table, 1)
-
-    for empty in empty_blocks:
-        filled = False
-        table = make_table(empty)
-
-        for puzzle_origin in puzzles:
-            if filled == True:
+    empty_list = bfs(game_board, 0)
+    puzzle_list = bfs(table, 1)
+    
+    for empty in empty_list:
+        is_filled = False
+        empty_table = make_table(empty)
+        
+        for puzzle in puzzle_list:
+            if is_filled:
                 break
-
-            puzzle = make_table(puzzle_origin)
-            for i in range(4):
-                puzzle, count = rotate(puzzle)
-
-                if table == puzzle:
-                    answer += count
-                    puzzles.remove(puzzle_origin)
-                    filled = True
+            puzzle_table = make_table(puzzle)
+            
+            for _ in range(4):
+                puzzle_table = rotate(puzzle_table)
+                if empty_table == puzzle_table:
+                    puzzle_list.remove(puzzle)
+                    answer += len(puzzle)
+                    is_filled = True
                     break
-
+        
     return answer
