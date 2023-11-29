@@ -1,4 +1,4 @@
-n = list(map(int, str(input())))
+n = list(map(int, input()))
 length = len(n)
 
 if sum(n[:length//2]) == sum(n[length//2:]):
