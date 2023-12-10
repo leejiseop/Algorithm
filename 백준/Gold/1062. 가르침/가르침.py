@@ -1,29 +1,46 @@
 import sys
 from itertools import combinations
 
+
+def word_to_bit(word):
+  bit = 0
+  for c in word:
+    bit = bit | (1 << ord(c) - ord('a'))
+  return bit
+
+
 input = sys.stdin.readline
 
-def word2bit(word):
-    bit = 0
-    for char in word:
-        bit = bit | (1 << ord(char) - ord('a'))
-    return bit
+# n, k = list(map(int, input().split()))
+# word_bits = []
+# teach_bits = []
+# all_alphabets = 0
+# answer = 0
 
-N, K = map(int, input().split())
-words = [input().rstrip() for _ in range(N)]
-bits = list(map(word2bit, words))
-base_bit = word2bit('antic')
+# for _ in range(n):
+#   word_bit = word_to_bit(input().rstrip())
+#   word_bits.append(word_bit)
+#   all_alphabets = all_alphabets | word_bit
 
-if K < 5:
-    print(0)
+
+
+n, k = list(map(int, input().split()))
+words = [input().rstrip() for _ in range(n)]
+word_bits = list(map(word_to_bit, words))
+base_bit = word_to_bit('antic')
+
+
+if k < 5:
+  print(0)
 else:
-    alphabet = [1 << i for i in range(26) if not (base_bit & 1 << i)]
-    answer = 0
-    for combination in combinations(alphabet, K-5):
-        know_bit = sum(combination) | base_bit
-        count = 0
-        for bit in bits:
-            if bit & know_bit == bit:
-                count += 1
-        answer = max(answer, count)
-    print(answer)
+  alphabet = [1 << i for i in range(26) if not (base_bit & 1 << i)]
+      
+  answer = 0
+  for combi in combinations(alphabet, k-5):
+    know_bit = sum(combi) | base_bit
+    cnt = 0
+    for word_bit in word_bits:
+      if word_bit & know_bit == word_bit:
+        cnt += 1
+    answer = max(answer, cnt)
+  print(answer)
