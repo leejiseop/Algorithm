@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 34088 KB, 시간: 156 ms
+메모리: 34672 KB, 시간: 144 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2023년 12월 12일 02:32:27
+2023년 12월 13일 01:31:52
 
 ### 문제 설명
 
@@ -32,7 +32,7 @@
 
 <p>2초가 지난 후에 시험관의 상태는 다음과 같다.</p>
 
-<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/35ea13c6-9ee3-40e1-8b21-c37beaf46c59/-/preview/" style="height: 148px; width: 250px;"></p>
+<p style="text-align: center;"><img alt="" src="" style="height: 148px; width: 250px;"></p>
 
 <p style="text-align: justify;">결과적으로 2초가 지난 뒤에 (3,2)에 존재하는 바이러스의 종류는 3번 바이러스다. 따라서 3을 출력하면 정답이다.</p>
 
