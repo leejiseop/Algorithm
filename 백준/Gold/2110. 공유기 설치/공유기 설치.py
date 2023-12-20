@@ -1,30 +1,38 @@
-# 집의 개수(N)와 공유기의 개수(C)를 입력 받기
-n, c = list(map(int, input().split(' ')))
-
-# 전체 집의 좌표 정보를 입력 받기
-array = []
+n, c = map(int, input().split())
+houses = []
 for _ in range(n):
-     array.append(int(input()))
-array.sort() # 이진 탐색 수행을 위해 정렬 수행
+  houses.append(int(input()))
+houses.sort()
 
-start = 1 # 가능한 최소 거리(min gap)
-end = array[-1] - array[0] # 가능한 최대 거리(max gap)
+
+### answer ###
+
+start = 1 # 최소거리 : 1
+end = houses[-1] - houses[0] # 최대거리 : 집 최장 거리
+
+# start = houses[0]
+# end = houses[-1]
+
 result = 0
 
-while(start <= end):
-    mid = (start + end) // 2 # mid는 가장 인접한 두 공유기 사이의 거리(gap)을 의미
-    # 첫째 집에는 무조건 공유기를 설치한다고 가정
-    value = array[0]
-    count = 1
-    # 현재의 mid 값을 이용해 공유기를 설치하기
-    for i in range(1, n): # 앞에서부터 차근차근 설치 
-        if array[i] >= value + mid:
-            value = array[i]
-            count += 1
-    if count >= c: # C개 이상의 공유기를 설치할 수 있는 경우, 거리를 증가시키기
-        start = mid + 1
-        result = mid # 최적의 결과를 저장
-    else: # C개 이상의 공유기를 설치할 수 없는 경우, 거리를 감소시키기
-        end = mid - 1
+while start <= end:
+  mid = (start + end) // 2 # 최소범위 설정
+  set_house = houses[0] # 맨 앞집에
+
+  # mid = (end - start + 1) // 2 # 최소 거리
+  # set_house = houses[0] # 앞 공유기
+
+  count = 1
+
+  for i in range(1, n): # 나머지 집들 탐색
+    if set_house + mid <= houses[i]: # 최소범위보다 멀면
+      set_house = houses[i] # 설치하고
+      count += 1 # 설치 수 증가
+      
+  if c <= count: # 딱맞게 설치됐거나 많이 설치됐으면
+    result = mid # 일단 저장하고
+    start = mid + 1 # 최대범위를 찾아야 하니 범위 늘려서 다시 탐색
+  else: # 적게 설치됐으면
+    end = mid - 1 # 범위 좁혀서 다시 탐색
 
 print(result)
