@@ -8,7 +8,7 @@ def count_by_range(a, left_value, right_value):
 array = [ [] for _ in range(10001)]
 reversed_array = [ [] for _ in range(10001)]
 
-def solution(words, queries): # 6:04
+def solution(words, queries):
     answer = []
     
     for word in words:
