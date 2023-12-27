@@ -1,21 +1,20 @@
-# 2:23
-
 n = int(input())
-t = []
-p = []
+t = [0]
+p = [0]
+dp = [0] * (1 + n + 1)
 max_val = 0
 
 for _ in range(n):
   data = list(map(int, input().split()))
   t.append(data[0])
   p.append(data[1])
-p.append(0)
 
-for i in range(n - 1, -1, -1): # rev
-  if i + t[i] <= n:
-    p[i] = max(p[i] + p[i + t[i]], max_val)
-    max_val = p[i]
+for i in range(n, 0, -1): # rev
+  time = i + t[i]
+  if time <= n + 1:
+    dp[i] = max(p[i] + dp[time], max_val)
+    max_val = dp[i]
   else:
-    p[i] = max_val
+    dp[i] = max_val
 
-print(p[0])
+print(dp[1])
