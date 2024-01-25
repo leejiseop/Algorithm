@@ -1,14 +1,16 @@
-str = list(map(int, list(str(input()))))
-i = 0
-length = len(str)
-count = 0
+s = list(map(int, input()))
 
-for i in range(length - 1):
-  if str[i] != str[i + 1]:
-    count += 1
+count_0 = 0
+count_1 = 0
+current = 999
 
-if count % 2 != 0:
-  count += 1
-count //= 2
+for digit in s:
+  if digit == current:
+    continue
+  if digit == 0:
+    count_0 += 1
+  else:
+    count_1 += 1
+  current = digit
 
-print(count)
+print(min(count_0, count_1))
